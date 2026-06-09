@@ -31,6 +31,10 @@ Strategy:
   consistency               Full consistency report + 40% min check
   usage                     Strategy mix diversity report
   check <strategy_id> <pnl> Check if trade violates daily consistency
+  pattern                   Pattern detection report (session WR, pair WR, auto-pause)
+  journal                   Full journal analytics
+  query <filters>           Query journal (--symbol EURUSD --session London)
+  resume <strategy_id>      Manually resume a paused strategy
 
 Trade:
   place <symbol> <dir> <lots> <sl> <tp>   Place a trade
@@ -180,6 +184,33 @@ async function main() {
         const { generateBriefing } = await import("./briefing.js");
         const briefing = await generateBriefing();
         console.log(briefing);
+        break;
+      }
+      case "pattern": {
+        const result = await executeTool("get_pattern_report", { min_trades: parseInt(args[0]) || 3 });
+        printJson(result);
+        break;
+      }
+      case "journal": {
+        const result = await executeTool("get_journal_analytics", {});
+        printJson(result);
+        break;
+      }
+      case "query": {
+        const opts = {};
+        for (let i = 0; i < args.length; i++) {
+          if (args[i] === "--symbol" && args[i + 1]) opts.symbol = args[++i];
+          if (args[i] === "--strategy" && args[i + 1]) opts.strategy_id = args[++i];
+          if (args[i] === "--session" && args[i + 1]) opts.session = args[++i];
+          if (args[i] === "--news") opts.has_news = true;
+        }
+        const result = await executeTool("query_journal", opts);
+        printJson(result);
+        break;
+      }
+      case "resume": {
+        const result = await executeTool("resume_strategy", { strategy_id: args[0] });
+        printJson(result);
         break;
       }
       default:

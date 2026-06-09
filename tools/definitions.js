@@ -357,6 +357,78 @@ Call this BEFORE placing a trade — if it returns violatesConsistency=true, red
       },
     },
   },
+
+  // ═══════════════════════════════════════════
+  //  PATTERN & MEMORY TOOLS (UPGRADED)
+  // ═══════════════════════════════════════════
+  {
+    type: "function",
+    function: {
+      name: "get_pattern_report",
+      description: `Get the full pattern detection report: session-based win rates per pair, strategy stats, day-of-week patterns, paused strategies.
+
+This reveals trading patterns the agent has learned from closed trades:
+- Which pairs win during which sessions
+- Which strategies are underperforming
+- Which days are historically weak
+- Any auto-paused strategies
+
+Use this to make data-driven decisions about which pair to trade right now.`,
+      parameters: {
+        type: "object",
+        properties: {
+          min_trades: { type: "number", description: "Minimum trades for a pattern to be considered (default 3)" },
+        },
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "get_journal_analytics",
+      description: `Get full trading journal analytics: win rate by session, by strategy, by pair. News day vs non-news day comparison. Top close reasons. MAE/MFE analysis.
+
+Use this for deep performance analysis — understand WHY trades win or lose, not just that they did.`,
+      parameters: { type: "object", properties: {} },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "query_journal",
+      description: `Query the trading journal with filters. Examples:
+- "How did EURUSD perform during London session?"
+- "What's the win rate of trend_continuation strategy?"
+- "Show me all trades on NFP days"
+
+Returns filtered trade list + aggregate stats.`,
+      parameters: {
+        type: "object",
+        properties: {
+          symbol: { type: "string", description: "Filter by trading symbol" },
+          strategy_id: { type: "string", description: "Filter by strategy ID" },
+          session: { type: "string", description: "Filter by session e.g. London, New York" },
+          has_news: { type: "boolean", description: "Only news-day trades (true) or non-news (false)" },
+          min_trades: { type: "number", description: "Minimum trades required for stats (default 0)" },
+        },
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "resume_strategy",
+      description: `Manually resume a paused strategy. Strategies are auto-paused when last 10 trades show < 30% win rate.
+Use this if you believe the strategy is ready to trade again despite the stats.`,
+      parameters: {
+        type: "object",
+        properties: {
+          strategy_id: { type: "string", description: "Strategy ID to resume" },
+        },
+        required: ["strategy_id"],
+      },
+    },
+  },
 ];
 
 export const tools = toolDefinitions.map((tool) => ({

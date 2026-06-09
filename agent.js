@@ -15,13 +15,14 @@ const SCANNER_TOOLS = new Set([
   "get_pair_analysis", "scan_markets", "get_forex_news", "check_news_buffer",
   "place_trade", "get_open_trades",
   "scan_strategies", "get_consistency_report", "get_strategy_usage", "check_daily_consistency",
+  "get_pattern_report", "query_journal",
 ]);
 
 const MANAGER_TOOLS = new Set([
   "get_account_status", "check_challenge_rules",
   "get_open_trades", "close_trade", "close_all_trades", "modify_trade",
   "get_forex_news",
-  "get_consistency_report",
+  "get_consistency_report", "get_pattern_report",
 ]);
 
 const GENERAL_PERSIST_TOOLS = new Set([

@@ -92,9 +92,11 @@ export async function getPendingOrders() {
 }
 
 /**
- * Get today's closed trades.
+ * Get today's closed trades. Returns empty array in dry-run mode.
  */
 export async function getTodayClosedTrades() {
+  if (DRY_RUN_MODE) return [];
+
   try {
     const accountId = await getDefaultAccountId();
     const today = new Date().toISOString().slice(0, 10);

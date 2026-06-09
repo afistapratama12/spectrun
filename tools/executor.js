@@ -7,9 +7,11 @@ import { trackTrade, recordTradeClose, getOpenTrackedTrades, getTrackedTrades, s
 import { config, reloadUserConfig } from "../config.js";
 import { log, logAction } from "../logger.js";
 import { getRecentDecisions, appendDecision } from "../decision-log.js";
-import { recordPerformance, getPerformanceHistory, getPerformanceSummary, addLesson } from "../lessons.js";
+import { recordPerformance, getPerformanceHistory, getPerformanceSummary, addLesson, getPatternReport, getPausedStrategies, resumeStrategy } from "../lessons.js";
 import { STRATEGIES, getStrategiesByType, getStrategiesForSession, getStrategy, getActiveSession, isStrategyValid, scorePairForStrategy, calculateStrategySLTP } from "../strategies/index.js";
 import { recordTradeForConsistency, getConsistencyReport, checkDailyConsistency, getStrategyUsageReport } from "../consistency-tracker.js";
+import { queryJournal, getJournalAnalytics } from "../trading-journal.js";
+import { getNewsCorrelations, getHighImpactEvents } from "../news.js";
 import fs from "fs";
 import { repoPath } from "../repo-root.js";
 
@@ -506,6 +508,22 @@ const toolMap = {
 
   check_daily_consistency: async ({ strategy_id, projected_pnl = 0 } = {}) => {
     return checkDailyConsistency({ strategyId: strategy_id, projectedPnl: projected_pnl });
+  },
+
+  get_pattern_report: async ({ min_trades = 3 } = {}) => {
+    return getPatternReport();
+  },
+
+  get_journal_analytics: async () => {
+    return getJournalAnalytics();
+  },
+
+  query_journal: async ({ symbol, strategy_id, session, has_news, min_trades = 0 } = {}) => {
+    return queryJournal({ symbol, strategyId: strategy_id, session, hasNews: has_news, minTrades: min_trades });
+  },
+
+  resume_strategy: async ({ strategy_id }) => {
+    return resumeStrategy(strategy_id);
   },
 };
 
