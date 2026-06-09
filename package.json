@@ -1,0 +1,30 @@
+{
+  "name": "spectrun",
+  "version": "1.0.0",
+  "description": "AI Autonomous Forex Trader for Prop-Firm Challenges — powered by LLMs via TradeLocker",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "setup": "node setup.js",
+    "cli": "node cli.js",
+    "pm2:start": "pm2 start ecosystem.config.cjs",
+    "pm2:restart": "pm2 restart spectrun",
+    "pm2:logs": "pm2 logs spectrun",
+    "pm2:stop": "pm2 stop spectrun"
+  },
+  "dependencies": {
+    "openai": "^4.73.0",
+    "node-cron": "^3.0.3",
+    "node-fetch": "^3.3.2",
+    "ws": "^8.18.0",
+    "jsonrepair": "^3.10.0",
+    "dotenv": "^16.4.5",
+    "cheerio": "^1.0.0",
+    "readline": "^1.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

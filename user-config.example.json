@@ -1,0 +1,60 @@
+{
+  "_comment": "Spectrun AI Autonomous Forex Trader — User Configuration",
+  "_docs": "All fields are optional — defaults are shown. Edit and restart the agent.",
+  "_secrets_warning": "Never put API keys, passwords, or private keys in this file — use .env only.",
+
+  "agentId": "",
+
+  "challenge": {
+    "phase": "evaluation",
+    "profitTargetPct": 4,
+    "maxDailyLossPct": 4,
+    "maxTotalLossPct": 8,
+    "minTradingDays": 4,
+    "consistencyMinPct": 25,
+    "timeLimitDays": 30,
+    "maxOpenPositions": 3,
+    "weekendHolding": false,
+    "allowedSessions": ["London", "New York"],
+    "newsBufferMinutes": 15,
+    "minRiskRewardRatio": 1.5
+  },
+
+  "risk": {
+    "riskPerTradePct": 0.5,
+    "maxDailyTrades": 5,
+    "maxConsecutiveLosses": 3,
+    "consecutiveLossCooldownMinutes": 60,
+    "trailingStopEnabled": true,
+    "trailingTriggerPips": 10,
+    "trailingDistancePips": 5,
+    "partialCloseEnabled": false,
+    "partialClosePct": 50
+  },
+
+  "strategy": {
+    "trendTimeframes": ["1h", "4h", "1D"],
+    "entryTimeframes": ["5m", "15m"],
+    "allowedPairs": ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD", "NZDUSD", "EURGBP", "EURJPY"],
+    "minATRMultiplier": 1.5,
+    "requireTrendAlignment": true,
+    "requireSessionVolume": true,
+    "avoidHighImpactNewsPairs": true
+  },
+
+  "schedule": {
+    "scannerIntervalMin": 30,
+    "managerIntervalMin": 10,
+    "healthCheckIntervalMin": 60,
+    "dailyBriefingHourUTC": 1
+  },
+
+  "llm": {
+    "scannerModel": "openrouter/healer-alpha",
+    "managerModel": "openrouter/healer-alpha",
+    "generalModel": "openrouter/healer-alpha",
+    "temperature": 0.3,
+    "maxTokens": 2048,
+    "maxSteps": 15
+  }
+}

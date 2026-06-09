@@ -1,0 +1,13 @@
+.env
+node_modules/
+user-config.json
+*.log
+state.json
+lessons.json
+decision-log.json
+daily-snapshots.json
+consistency.json
+pool-memory.json
+signal-weights.json
+smart-wallets.json
+hivemind-cache.json
